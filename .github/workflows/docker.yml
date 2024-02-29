@@ -16,6 +16,7 @@ on:
 #      - 'master'
   release:
     types: [ published ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -43,7 +44,7 @@ jobs:
           platforms: linux/arm,linux/arm64,linux/amd64
           push: true
           tags: |
-            ppoiuty/xrayr:${{ steps.get_version.outputs.VERSION }}
-            ppoiuty/xrayr:latest
+            hhhflow/xrayr:1.0.0
+            hhhflow/xrayr:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
