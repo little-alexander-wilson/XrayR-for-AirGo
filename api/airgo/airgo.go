@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/XrayR-project/XrayR/api"
-	"github.com/go-resty/resty/v2"
 	"log"
 	"os"
 	"regexp"
+
+	"github.com/XrayR-project/XrayR/api"
+	"github.com/go-resty/resty/v2"
 
 	"time"
 )
@@ -104,6 +105,9 @@ func (c *APIClient) GetNodeInfo() (*api.NodeInfo, error) {
 	// Etag identifier for a specific version of a resource. StatusCode = 304 means no changed
 	if res.StatusCode() == 304 {
 		return nil, errors.New(api.NodeNotModified)
+	}
+	if err != nil {
+		return nil, err
 	}
 	// update etag
 	if res.Header().Get("Etag") != "" && res.Header().Get("Etag") != c.eTags["node"] {
@@ -233,6 +237,9 @@ func (c *APIClient) GetUserList() (userList *[]api.UserInfo, err error) {
 	// Etag identifier for a specific version of a resource. StatusCode = 304 means no changed
 	if res.StatusCode() == 304 {
 		return nil, errors.New(api.NodeNotModified)
+	}
+	if err != nil {
+		return nil, err
 	}
 	// update etag
 	if res.Header().Get("Etag") != "" && res.Header().Get("Etag") != c.eTags["userlist"] {

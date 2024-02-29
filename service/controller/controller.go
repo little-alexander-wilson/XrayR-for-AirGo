@@ -194,7 +194,8 @@ func (c *Controller) nodeInfoMonitor() (err error) {
 		}
 	}
 	if newNodeInfo.Port == 0 {
-		return errors.New("server port must > 0")
+		log.Print("server port must > 0")
+		return nil
 	}
 
 	// Update User
