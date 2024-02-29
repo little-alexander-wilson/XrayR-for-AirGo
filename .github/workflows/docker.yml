@@ -23,6 +23,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        
+      - name: Get version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -44,7 +48,7 @@ jobs:
           platforms: linux/arm,linux/arm64,linux/amd64
           push: true
           tags: |
-            hhhflow/xrayr:1.0.0
+            hhhflow/xrayr:${{ steps.get_version.outputs.VERSION }}
             hhhflow/xrayr:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
