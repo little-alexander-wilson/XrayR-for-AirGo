@@ -197,7 +197,6 @@ func (c *Controller) nodeInfoMonitor() (err error) {
 		log.Print("server port must > 0")
 		return nil
 	}
-
 	// Update User
 	var usersChanged = true
 	newUserInfo, err := c.apiClient.GetUserList()
@@ -298,7 +297,11 @@ func (c *Controller) nodeInfoMonitor() (err error) {
 				}
 			}
 		}
-		log.Printf("%s %d user deleted, %d user added", c.logPrefix(), len(deleted), len(added))
+		del_num := len(deleted)
+		add_num := len(added)
+		if del_num > 0 || add_num > 0 {
+			log.Printf("%s %d user deleted, %d user added", c.logPrefix(), del_num, add_num)
+		}
 	}
 	c.userList = newUserInfo
 	return nil
@@ -419,7 +422,7 @@ func (c *Controller) addNewUser(userInfo *[]api.UserInfo, nodeInfo *api.NodeInfo
 	if err != nil {
 		return err
 	}
-	log.Printf("%s Added %d new users", c.logPrefix(), len(*userInfo))
+	// log.Printf("%s Added %d new users", c.logPrefix(), len(*userInfo))
 	return nil
 }
 

@@ -61,6 +61,7 @@ func New(apiConfig *api.Config) *APIClient {
 		DeviceLimit:         apiConfig.DeviceLimit,
 		LocalRuleList:       localRuleList,
 		DisableCustomConfig: apiConfig.DisableCustomConfig,
+		eTags:               make(map[string]string),
 	}
 }
 
@@ -236,7 +237,7 @@ func (c *APIClient) GetUserList() (userList *[]api.UserInfo, err error) {
 		Get(path)
 	// Etag identifier for a specific version of a resource. StatusCode = 304 means no changed
 	if res.StatusCode() == 304 {
-		return nil, errors.New(api.NodeNotModified)
+		return nil, errors.New(api.UserNotModified)
 	}
 	if err != nil {
 		return nil, err
